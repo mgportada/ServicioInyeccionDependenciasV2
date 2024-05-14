@@ -1,14 +1,17 @@
-﻿using ServicioInyeccionDependenciasV2.Dominio;
+﻿using System.Data;
+using ServicioInyeccionDependenciasV2.Aplicacion.Dependencia;
+using ServicioInyeccionDependenciasV2.Dominio;
+using ServicioInyeccionDependenciasV2.Infraestructura.Repositories.Dependencias;
 
 namespace ServicioInyeccionDependenciasV2.Infraestructura.Repositories
 {
-    public class CustomerRepository
+    public class CustomerRepository:IRepository
     {
-        private MySQLConnection _connection;
+        private IDbConexion _connection;
 
-        public CustomerRepository()
+        public CustomerRepository(IDbConexion dbConnection)
         {
-            _connection = new MySQLConnection();
+            _connection = dbConnection;
         }
 
         public List<Customers> GetCustomers()
@@ -16,6 +19,10 @@ namespace ServicioInyeccionDependenciasV2.Infraestructura.Repositories
             if (_connection.GetType() == typeof(MySQLConnection))
             {
                 Console.WriteLine("Connection is MySQL");
+            }
+            if (_connection.GetType() == typeof(Oracle))
+            {
+                Console.WriteLine("Connection is Oracle");
             }
 
             return new List<Customers>
