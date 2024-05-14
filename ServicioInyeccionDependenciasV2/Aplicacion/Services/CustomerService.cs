@@ -1,20 +1,20 @@
-﻿using ServicioInyeccionDependenciasV2.Dominio;
-using ServicioInyeccionDependenciasV2.Infraestructura.Repositories;
+﻿using ServicioInyeccionDependenciasV2.Dependencies;
+using ServicioInyeccionDependenciasV2.Dominio;
 
 namespace ServicioInyeccionDependenciasV2.Aplicacion.Services
 {
-    public class CustomerService
+    public class CustomerService : IRepository
     {
-        private CustomerRepository _repository;
+        private IRepository _service;
 
-        public CustomerService()
+        public CustomerService(IRepository repository)
         {
-            _repository = new CustomerRepository();
+            _service = repository;
         }
 
         public List<Customers> GetCustomers()
         {
-            return _repository.GetCustomers();
+            return _service.GetCustomers();
         }
     }
 }
